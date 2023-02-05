@@ -1,5 +1,4 @@
-import inquirer from "inquirer";
-import service from "../Interfaces/Service_types.js";
+import inquirer, { Answers, QuestionCollection } from "inquirer";
 import Service_interface from "../Interfaces/Service_interface.js";
 import Loader from "./Loader.js";
 
@@ -21,12 +20,43 @@ export default class CLIHandler {
 
   static async main_CLI() {
     const prompt = inquirer.createPromptModule();
+
     const answer = await prompt({
       type: "list",
       message: "Mana yang ingin di pilih",
       name: "value",
-      choices: CLIHandler.ServiceName,
+      choices: [...CLIHandler.ServiceName, "Exit"],
     });
+    if (answer.value === "Exit") {
+      console.log("Sampai jumpa 👋");
+      return;
+    }
     Loader.callService(answer.value);
+  }
+
+  static async question_CLI(
+    type: "input" | "list",
+    message: string,
+    choices: string[] = []
+  ) {
+    if (type === "input") {
+      const collection: QuestionCollection = {
+        type: "input",
+        message: message,
+        name: "value",
+      };
+    } else {
+      const collection: QuestionCollection = {
+        type: "list",
+        name: "value",
+        message: message,
+        choices: choices,
+      };
+
+      const prompt = inquirer.createPromptModule();
+      const answer = await prompt(collection);
+
+      return answer;
+    }
   }
 }
