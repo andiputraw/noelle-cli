@@ -1,0 +1,11 @@
+{
+  "name": "noelle-cli",
+  "version": "0.0.1",
+  "description": "Personal Assistant with command line interface",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "andiputraw",
+  "license": "ISC"
+}
